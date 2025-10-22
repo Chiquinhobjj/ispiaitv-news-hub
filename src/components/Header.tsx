@@ -3,10 +3,8 @@ import { Search, Menu, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
-import logoPadrao from "@/assets/logo-padrao.webp";
-import logoPadraoFallback from "@/assets/logo-padrao.png";
-import logoBranco from "@/assets/logo-branco.webp";
-import logoBrancoFallback from "@/assets/logo-branco.png";
+import logoPadrao from "@/assets/logo-padrao.png";
+import logoBranco from "@/assets/logo-branco.png";
 import iconOlho from "@/assets/icon-olho.png";
 
 const Header = () => {
@@ -27,14 +25,11 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center" aria-label="IspiAI - Home">
             {/* Desktop: Logo completo */}
-            <picture className="hidden md:block">
-              <source srcSet={darkMode ? logoBranco : logoPadrao} type="image/webp" />
-              <img 
-                src={darkMode ? logoBrancoFallback : logoPadraoFallback} 
-                alt="IspiAI - Jornalismo Investigativo em IA e Tecnologia" 
-                className="h-8 w-auto"
-              />
-            </picture>
+            <img 
+              src={darkMode ? logoBranco : logoPadrao} 
+              alt="IspiAI - Jornalismo Investigativo em IA e Tecnologia" 
+              className="h-8 w-auto hidden md:block"
+            />
             
             {/* Mobile: Apenas ícone */}
             <img 
