@@ -1,3 +1,11 @@
+// Publisher Logo Configuration (Google News requirements)
+export const PUBLISHER_LOGO_CONFIG = {
+  "@type": "ImageObject" as const,
+  url: "https://ispiai.com/logo.png",
+  width: 800,
+  height: 267
+};
+
 interface NewsArticleImageObject {
   "@type": "ImageObject";
   url: string;
@@ -25,9 +33,9 @@ export interface NewsArticleData {
   datePublished: string;
   dateModified: string;
   author: NewsArticleAuthor;
-  publisher: {
+  publisher?: {
     name: string;
-    logo: PublisherLogo;
+    logo?: PublisherLogo;
   };
   articleSection: string;
   url: string;
@@ -45,7 +53,9 @@ export function generateNewsArticleJsonLd(data: NewsArticleData) {
     console.warn("NewsArticle: Imagem com largura <1200px pode ter preview pequeno no Google Discover");
   }
 
-  if (data.publisher.logo.width < 112 || data.publisher.logo.height < 112) {
+  const publisherLogo = data.publisher?.logo || PUBLISHER_LOGO_CONFIG;
+  
+  if (publisherLogo.width < 112 || publisherLogo.height < 112) {
     console.error("NewsArticle: Logo do publisher deve ter no mínimo 112x112px");
   }
 
@@ -64,8 +74,8 @@ export function generateNewsArticleJsonLd(data: NewsArticleData) {
     },
     "publisher": {
       "@type": "Organization",
-      "name": data.publisher.name,
-      "logo": data.publisher.logo
+      "name": data.publisher?.name || "IspiAI",
+      "logo": publisherLogo
     },
     "mainEntityOfPage": {
       "@type": "WebPage",

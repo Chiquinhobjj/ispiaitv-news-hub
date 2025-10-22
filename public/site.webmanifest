@@ -1,0 +1,22 @@
+{
+  "name": "IspiAI - Jornalismo Investigativo em IA e Tecnologia",
+  "short_name": "IspiAI",
+  "description": "Portal de jornalismo investigativo focado em inteligência artificial, tecnologia e sociedade",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0EA5E9",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

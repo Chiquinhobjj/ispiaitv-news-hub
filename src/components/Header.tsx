@@ -3,6 +3,11 @@ import { Search, Menu, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
+import logoPadrao from "@/assets/logo-padrao.webp";
+import logoPadraoFallback from "@/assets/logo-padrao.png";
+import logoBranco from "@/assets/logo-branco.webp";
+import logoBrancoFallback from "@/assets/logo-branco.png";
+import iconOlho from "@/assets/icon-olho.png";
 
 const Header = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -20,10 +25,23 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="gradient-primary rounded-lg p-2">
-              <span className="text-xl font-black text-white">IspiAI</span>
-            </div>
+          <Link to="/" className="flex items-center" aria-label="IspiAI - Home">
+            {/* Desktop: Logo completo */}
+            <picture className="hidden md:block">
+              <source srcSet={darkMode ? logoBranco : logoPadrao} type="image/webp" />
+              <img 
+                src={darkMode ? logoBrancoFallback : logoPadraoFallback} 
+                alt="IspiAI - Jornalismo Investigativo em IA e Tecnologia" 
+                className="h-8 w-auto"
+              />
+            </picture>
+            
+            {/* Mobile: Apenas ícone */}
+            <img 
+              src={iconOlho} 
+              alt="IspiAI" 
+              className="h-10 w-10 md:hidden"
+            />
           </Link>
 
           {/* Desktop Navigation */}

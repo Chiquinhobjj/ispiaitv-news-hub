@@ -14,6 +14,12 @@ const SEOHead = ({ title, description, image, article, canonical }: SEOHeadProps
     // Update title
     document.title = `${title} | IspiAI`;
     
+    // Fallback to logo if no image provided
+    const defaultImage = "https://ispiai.com/logo.png";
+    const ogImage = image || defaultImage;
+    const imageWidth = image ? "1200" : "800";
+    const imageHeight = image ? "630" : "267";
+    
     // Update meta tags
     const metaTags = [
       { name: "description", content: description },
@@ -21,19 +27,14 @@ const SEOHead = ({ title, description, image, article, canonical }: SEOHeadProps
       { property: "og:title", content: title },
       { property: "og:description", content: description },
       { property: "og:type", content: article ? "article" : "website" },
+      { property: "og:image", content: ogImage },
+      { property: "og:image:width", content: imageWidth },
+      { property: "og:image:height", content: imageHeight },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: title },
       { name: "twitter:description", content: description },
+      { name: "twitter:image", content: ogImage }
     ];
-
-    if (image) {
-      metaTags.push(
-        { property: "og:image", content: image },
-        { property: "og:image:width", content: "1200" },
-        { property: "og:image:height", content: "630" },
-        { name: "twitter:image", content: image }
-      );
-    }
 
     metaTags.forEach(({ name, property, content }) => {
       const selector = name ? `meta[name="${name}"]` : `meta[property="${property}"]`;
