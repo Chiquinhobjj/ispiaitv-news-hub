@@ -1,0 +1,26 @@
+{
+  "name": "IspiAI - Jornalismo em IA",
+  "short_name": "IspiAI",
+  "description": "Notícias, análises e tendências em Inteligência Artificial",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FFFFFF",
+  "theme_color": "#4A90E2",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["news", "magazines"],
+  "lang": "pt-BR"
+}

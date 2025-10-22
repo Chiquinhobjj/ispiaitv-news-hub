@@ -13,6 +13,20 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        serif: ['Newsreader', 'Georgia', 'serif'],
+        sans: ['Source Sans 3', 'Inter', 'system-ui', 'sans-serif'],
+      },
+      boxShadow: {
+        'soft': '0 2px 8px rgba(0, 0, 0, 0.04)',
+        'hover': '0 4px 16px rgba(0, 0, 0, 0.08)',
+        'elevated': '0 8px 24px rgba(0, 0, 0, 0.12)',
+      },
+      spacing: {
+        '18': '4.5rem',
+        '88': '22rem',
+        '128': '32rem',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -51,11 +65,20 @@ export default {
         },
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: '20px',
+        md: '16px',
+        sm: '12px',
+        xl: '24px',
       },
       keyframes: {
+        "shimmer": {
+          "0%": { backgroundPosition: "-1000px 0" },
+          "100%": { backgroundPosition: "1000px 0" },
+        },
+        "progress": {
+          "0%": { width: "0%" },
+          "100%": { width: "100%" },
+        },
         "accordion-down": {
           from: {
             height: "0",
@@ -74,6 +97,8 @@ export default {
         },
       },
       animation: {
+        "shimmer": "shimmer 2s infinite linear",
+        "progress": "progress 30s linear",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
