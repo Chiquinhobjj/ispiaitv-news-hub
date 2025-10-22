@@ -67,6 +67,55 @@ npm run build         # Build incluirá validação
 
 ---
 
+## 🎨 Mock Ads para Desenvolvimento
+
+Para visualizar o layout com anúncios preenchidos durante desenvolvimento:
+
+### Ativar Mock Ads
+
+**Opção 1: Query Parameter**
+```
+http://localhost:5173/?mock_ads=true
+```
+
+**Opção 2: Toggle na Interface**
+- Clique no botão "Mocks OFF" no canto superior direito da página
+- O estado persiste durante a sessão
+
+### O que são Mock Ads?
+
+Mock Ads são anúncios fictícios que simulam publicidade real de empresas relacionadas ao contexto de IA/Tecnologia:
+
+- **AWS Cloud** (Leaderboard) - Serviços de cloud computing
+- **ChatGPT Enterprise** (Infeed) - IA generativa corporativa
+- **NVIDIA RTX 5090** (Sidebar) - Hardware para ML
+- **Coursera** (Infeed) - Educação em tecnologia
+- **CrowdStrike** (Sidebar) - Segurança cibernética
+
+### Características
+
+- ✅ **Gradientes modernos** usando tokens do design system
+- ✅ **Responsivos** (leaderboard 970x250 → mobile 320x100)
+- ✅ **Badge "Anúncio"** para transparência
+- ✅ **CTAs realistas** ("Teste Grátis", "Saiba Mais", etc.)
+- ✅ **Sem JavaScript externo** (sem latência de GPT)
+- ✅ **CLS prevention** mantido (mesmo min-height)
+
+### Quando usar?
+
+- 🎨 **Design reviews** - Ver layout completo sem Line Items
+- 📸 **Screenshots** - Capturas com ads preenchidos
+- 🧪 **Testes de densidade** - Validar Better Ads compliance
+- 💡 **Demos para clientes** - Mostrar posicionamento de ads
+
+### Limitações
+
+- Mocks não testam real GPT performance
+- Não validam viewability/impression tracking
+- Para testes de produção, use Line Items reais no Ad Manager
+
+---
+
 ## 🐛 Troubleshooting Rápido
 
 ### Ads não aparecem?

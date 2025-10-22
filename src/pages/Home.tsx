@@ -1,15 +1,23 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import ShortPlayer from "@/components/ShortPlayer";
 import ArticleCard from "@/components/ArticleCard";
 import AdSlot from "@/components/AdSlot";
 import SEOHead from "@/components/SEOHead";
+import { Button } from "@/components/ui/button";
 import { useGPT } from "@/hooks/useGPT";
 import { logAdDensityWarning } from "@/lib/ad-density";
+import { Eye, EyeOff } from "lucide-react";
 
 const Home = () => {
   // Initialize Google Publisher Tag
   useGPT();
+  
+  // Check for mock_ads query param or use state
+  const [useMockAds, setUseMockAds] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('mock_ads') === 'true';
+  });
 
   // Validate ad density on mobile (Better Ads compliance)
   useEffect(() => {
@@ -78,9 +86,29 @@ const Home = () => {
       <div className="min-h-screen">
         <Header />
         
+        {/* Mock Ads Toggle */}
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setUseMockAds(!useMockAds)}
+          className="fixed top-20 right-4 z-50 shadow-lg"
+        >
+          {useMockAds ? (
+            <>
+              <Eye className="w-4 h-4" />
+              <span className="ml-2">Mocks ON</span>
+            </>
+          ) : (
+            <>
+              <EyeOff className="w-4 h-4" />
+              <span className="ml-2">Mocks OFF</span>
+            </>
+          )}
+        </Button>
+        
         <main className="container mx-auto px-4 py-8">
           {/* Top Leaderboard Ad - Above the fold */}
-          <AdSlot slotId="top_leaderboard" className="mb-8 max-w-[970px] mx-auto" />
+          <AdSlot slotId="top_leaderboard" className="mb-8 max-w-[970px] mx-auto" useMock={useMockAds} />
 
           {/* Hero Section - Shorts */}
           <section className="mb-12">
@@ -97,7 +125,7 @@ const Home = () => {
           </section>
 
           {/* Infeed Ad 1 - Between shorts and featured */}
-          <AdSlot slotId="infeed_home_1" className="mb-8" />
+          <AdSlot slotId="infeed_home_1" className="mb-8" useMock={useMockAds} />
 
           {/* Featured Article */}
           <section className="mb-12">
@@ -116,7 +144,7 @@ const Home = () => {
                     <ArticleCard {...article} />
                     {/* Infeed Ad 2 - After second article */}
                     {idx === 1 && (
-                      <AdSlot slotId="infeed_home_2" className="mt-6" />
+                      <AdSlot slotId="infeed_home_2" className="mt-6" useMock={useMockAds} />
                     )}
                   </div>
                 ))}
@@ -125,14 +153,14 @@ const Home = () => {
 
             {/* Sidebar - Desktop only */}
             <aside className="hidden md:block space-y-6">
-              <AdSlot slotId="sidebar_mpu_1" />
-              <AdSlot slotId="sidebar_mpu_2" />
+              <AdSlot slotId="sidebar_mpu_1" useMock={useMockAds} />
+              <AdSlot slotId="sidebar_mpu_2" useMock={useMockAds} />
             </aside>
           </section>
 
           {/* Sticky Bottom Ad - Mobile only */}
           <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-            <AdSlot slotId="sticky_bottom_mobile" />
+            <AdSlot slotId="sticky_bottom_mobile" useMock={useMockAds} />
           </div>
         </main>
       </div>
