@@ -45,7 +45,7 @@ export const useGPT = () => {
       // 5. Open Publisher Console if ?google_console=1 in URL
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.get('google_console') === '1') {
-        googletag.openConsole();
+        (googletag as any).openConsole();
         console.log("[GPT] Publisher Console opened (debug mode)");
       }
     });
