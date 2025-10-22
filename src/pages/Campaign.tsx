@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import Header from "@/components/Header";
+import { Shell } from "@/components/Layout/Shell";
 import SEOHead from "@/components/SEOHead";
 import ArticleCard from "@/components/ArticleCard";
 import { ArrowLeft, Megaphone } from "lucide-react";
@@ -40,17 +40,14 @@ const Campaign = () => {
   ];
 
   return (
-    <>
+    <Shell>
       <SEOHead 
         title={campaign.title}
         description={campaign.description}
         canonical={`https://ispiai.com/campanhas/${id}`}
       />
       
-      <div className="min-h-screen">
-        <Header />
-        
-        <main className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8">
           {/* Breadcrumb */}
           <nav className="mb-6">
             <Link to="/" className="inline-flex items-center text-sm text-muted-foreground hover:text-primary transition-smooth">
@@ -63,23 +60,23 @@ const Campaign = () => {
           <div className="max-w-4xl mx-auto mb-12">
             <div className="flex items-center space-x-2 text-accent mb-4">
               <Megaphone className="h-6 w-6" />
-              <span className="text-sm font-medium uppercase tracking-wide">Campanha</span>
+              <span className="label">Campanha</span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+            <h1 className="heading-xl mb-6">
               {campaign.title}
             </h1>
 
-            <p className="text-xl text-muted-foreground mb-8">
+            <p className="lead mb-8">
               {campaign.description}
             </p>
 
             {/* Objectives */}
             <Card className="p-6 bg-secondary/50">
-              <h3 className="font-bold text-lg mb-4">Objetivos da campanha</h3>
+              <h3 className="heading-sm mb-4">Objetivos da campanha</h3>
               <ul className="space-y-2">
                 {campaign.objectives.map((objective, idx) => (
-                  <li key={idx} className="flex items-start">
+                  <li key={idx} className="flex items-start body-base">
                     <span className="inline-block w-6 h-6 rounded-full bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center mr-3 flex-shrink-0 mt-0.5">
                       {idx + 1}
                     </span>
@@ -92,7 +89,7 @@ const Campaign = () => {
 
           {/* Articles */}
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold mb-6">Conteúdo da campanha</h2>
+            <h2 className="heading-md mb-6">Conteúdo da campanha</h2>
             
             <div className="space-y-6">
               {articles.map((article) => (
@@ -100,9 +97,8 @@ const Campaign = () => {
               ))}
             </div>
           </div>
-        </main>
       </div>
-    </>
+    </Shell>
   );
 };
 

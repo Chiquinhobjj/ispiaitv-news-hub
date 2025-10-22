@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Header from "@/components/Header";
+import { Shell } from "@/components/Layout/Shell";
 import SEOHead from "@/components/SEOHead";
 import ArticleCard from "@/components/ArticleCard";
 import { Input } from "@/components/ui/input";
@@ -35,19 +35,16 @@ const Search = () => {
   };
 
   return (
-    <>
+    <Shell>
       <SEOHead 
         title="Busca"
         description="Busque notícias, análises e dossiês no portal IspiAI"
         canonical="https://ispiai.com/busca"
       />
       
-      <div className="min-h-screen">
-        <Header />
-        
-        <main className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8">
           <div className="max-w-3xl mx-auto">
-            <h1 className="text-4xl font-bold mb-8">Buscar</h1>
+            <h1 className="heading-xl mb-8">Buscar</h1>
 
             {/* Search Form */}
             <form onSubmit={handleSearch} className="mb-12">
@@ -71,7 +68,7 @@ const Search = () => {
             {/* Results */}
             {query && (
               <div className="space-y-6">
-                <p className="text-muted-foreground">
+                <p className="body-base text-muted-foreground">
                   Encontrados <strong>{results.length} resultados</strong> para "{query}"
                 </p>
 
@@ -86,15 +83,14 @@ const Search = () => {
             {!query && (
               <div className="text-center py-12">
                 <SearchIcon className="h-16 w-16 mx-auto mb-4 text-muted-foreground/50" />
-                <p className="text-muted-foreground">
+                <p className="body-base text-muted-foreground">
                   Digite algo para começar a busca
                 </p>
               </div>
             )}
           </div>
-        </main>
       </div>
-    </>
+    </Shell>
   );
 };
 

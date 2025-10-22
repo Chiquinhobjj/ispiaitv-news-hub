@@ -24,7 +24,7 @@ const Home = () => {
 
       {/* Shorts Hero Section */}
       <section className="container py-8">
-        <h2 className="heading-md mb-6">Últimas em 30s</h2>
+        <h2 className="heading-lg mb-6">Últimas em 30s</h2>
         <ShortsRail shorts={mockShorts} />
       </section>
 

@@ -38,12 +38,12 @@ export const ShortCard = ({ short, onClick }: ShortCardProps) => {
       {/* Content */}
       <div className="absolute bottom-0 left-0 right-0 p-4 space-y-2">
         {/* Category Badge */}
-        <Badge variant="secondary" className="text-xs">
+        <Badge variant="secondary" className="label">
           {short.category}
         </Badge>
 
         {/* Title */}
-        <h3 className="font-serif text-white text-left text-sm md:text-base font-semibold line-clamp-2">
+        <h3 className="heading-xs text-white text-left line-clamp-2">
           {short.title}
         </h3>
 

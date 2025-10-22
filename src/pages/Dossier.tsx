@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import Header from "@/components/Header";
+import { Shell } from "@/components/Layout/Shell";
 import SEOHead from "@/components/SEOHead";
 import ArticleCard from "@/components/ArticleCard";
 import { ArrowLeft, FileText } from "lucide-react";
@@ -43,17 +43,14 @@ const Dossier = () => {
   ];
 
   return (
-    <>
+    <Shell>
       <SEOHead 
         title={dossier.title}
         description={dossier.description}
         canonical={`https://ispiai.com/dossies/${id}`}
       />
       
-      <div className="min-h-screen">
-        <Header />
-        
-        <main className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8">
           {/* Breadcrumb */}
           <nav className="mb-6">
             <Link to="/" className="inline-flex items-center text-sm text-muted-foreground hover:text-primary transition-smooth">
@@ -66,18 +63,18 @@ const Dossier = () => {
           <div className="max-w-4xl mx-auto mb-12">
             <div className="flex items-center space-x-2 text-accent mb-4">
               <FileText className="h-6 w-6" />
-              <span className="text-sm font-medium uppercase tracking-wide">Dossiê</span>
+              <span className="label">Dossiê</span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+            <h1 className="heading-xl mb-6">
               {dossier.title}
             </h1>
 
-            <p className="text-xl text-muted-foreground mb-6">
+            <p className="lead mb-6">
               {dossier.description}
             </p>
 
-            <div className="text-sm text-muted-foreground">
+            <div className="meta">
               Publicado em <time dateTime={dossier.publishDate}>15 de outubro de 2025</time>
               {" • "}
               Atualizado em <time dateTime={dossier.updateDate}>22 de outubro de 2025</time>
@@ -86,7 +83,7 @@ const Dossier = () => {
 
           {/* Articles */}
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold mb-6">Matérias do dossiê</h2>
+            <h2 className="heading-md mb-6">Matérias do dossiê</h2>
             
             <div className="space-y-6">
               {articles.map((article) => (
@@ -94,9 +91,8 @@ const Dossier = () => {
               ))}
             </div>
           </div>
-        </main>
       </div>
-    </>
+    </Shell>
   );
 };
 

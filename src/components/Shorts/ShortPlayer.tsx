@@ -52,7 +52,7 @@ export const ShortPlayer = ({ shorts, initialIndex, onClose }: ShortPlayerProps)
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className="max-w-[450px] h-[80vh] md:h-[90vh] p-0 bg-black overflow-hidden">
+      <DialogContent className="max-w-[450px] h-[80vh] md:h-[90vh] p-0 bg-black overflow-hidden z-50">
         <div className="relative w-full h-full">
           {/* Poster/Video Container */}
           <div
@@ -99,12 +99,12 @@ export const ShortPlayer = ({ shorts, initialIndex, onClose }: ShortPlayerProps)
           {/* Bottom Bar - Content + Controls */}
           <div className="absolute bottom-0 left-0 right-0 p-6 space-y-4 z-10">
             {/* Category Badge */}
-            <Badge variant="secondary" className="text-xs">
+            <Badge variant="secondary" className="label">
               {currentShort.category}
             </Badge>
 
             {/* Title */}
-            <h2 className="font-serif text-white text-xl md:text-2xl font-bold leading-tight">
+            <h2 className="heading-md text-white leading-tight">
               {currentShort.title}
             </h2>
 

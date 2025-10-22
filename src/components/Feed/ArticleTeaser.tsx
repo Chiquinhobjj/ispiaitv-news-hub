@@ -26,17 +26,17 @@ export const ArticleTeaser = ({ article }: ArticleTeaserProps) => {
 
         {/* Content */}
         <div className="p-4 md:p-6 flex-1">
-          <Badge variant="secondary" className="mb-2">{article.category}</Badge>
+          <Badge variant="secondary" className="mb-2 label">{article.category}</Badge>
           
-          <h3 className="heading-xs line-clamp-2 mb-2 group-hover:text-primary transition-colors">
+          <h3 className="heading-sm line-clamp-2 mb-2 group-hover:text-primary transition-colors">
             {article.title}
           </h3>
           
-          <p className="body-sm text-muted-foreground line-clamp-3 mb-4 hidden md:block">
+          <p className="body-base text-muted-foreground line-clamp-3 mb-4 hidden md:block">
             {article.excerpt}
           </p>
 
-          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+          <div className="flex items-center gap-4 meta">
             <div className="flex items-center gap-1">
               <User className="h-4 w-4" />
               <span>{article.author.name}</span>
