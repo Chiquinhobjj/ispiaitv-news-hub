@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { LAZY_LOAD_CONFIG } from "@/lib/gpt-config";
+import { LAZY_LOAD_CONFIG, PRIVACY_SETTINGS } from "@/lib/gpt-config";
 
 /**
  * Initialize Google Publisher Tag (GPT) with best practices
@@ -34,13 +34,20 @@ export const useGPT = () => {
       // 3. Privacy Settings (GDPR/CCPA Compliance)
       // Enables non-personalized ads when consent is not available
       googletag.pubads().setPrivacySettings({
-        limitedAds: true
+        limitedAds: PRIVACY_SETTINGS.limitedAds
       });
 
       // 4. Enable all GPT services
       googletag.enableServices();
 
       console.log("[GPT] Initialized with SRA + Lazy Load + Privacy Settings");
+
+      // 5. Open Publisher Console if ?google_console=1 in URL
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('google_console') === '1') {
+        googletag.openConsole();
+        console.log("[GPT] Publisher Console opened (debug mode)");
+      }
     });
 
     return () => {

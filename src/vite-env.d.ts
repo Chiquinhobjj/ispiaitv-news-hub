@@ -54,6 +54,7 @@ declare global {
     function destroySlots(slots?: Slot[]): boolean;
     function pubads(): PubAdsService;
     function sizeMapping(): SizeMappingBuilder;
+    function openConsole(): void;
 
     const cmd: CommandArray;
   }

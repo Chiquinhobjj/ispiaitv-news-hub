@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import Header from "@/components/Header";
 import SEOHead from "@/components/SEOHead";
@@ -9,12 +10,26 @@ import AdSlot from "@/components/AdSlot";
 import { ArrowLeft, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useGPT } from "@/hooks/useGPT";
+import { logAdDensityWarning } from "@/lib/ad-density";
 
 const Article = () => {
   const { slug } = useParams();
 
   // Initialize Google Publisher Tag
   useGPT();
+
+  // Validate ad density on mobile (Better Ads compliance)
+  useEffect(() => {
+    // Only check on mobile
+    if (window.innerWidth < 768) {
+      // Wait for content to load
+      setTimeout(() => {
+        // Heights: article_mid (250) + inarticle_1 (250) + inarticle_2 (250) + sticky_bottom (50)
+        const adSlotHeights = [250, 250, 250, 50];
+        logAdDensityWarning('Article', adSlotHeights);
+      }, 1000);
+    }
+  }, []);
 
   // Mock data - será substituído por dados reais
   const article = {
@@ -213,6 +228,9 @@ const Article = () => {
           <div className="my-12">
             <LinhaDoTempo events={timelineEvents} />
           </div>
+
+          {/* In-article Ad 2 - After timeline */}
+          <AdSlot slotId="inarticle_2" className="my-8" />
 
           {/* Transparency Box */}
           <BoxTransparencia 

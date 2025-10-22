@@ -1,13 +1,28 @@
+import { useEffect } from "react";
 import Header from "@/components/Header";
 import ShortPlayer from "@/components/ShortPlayer";
 import ArticleCard from "@/components/ArticleCard";
 import AdSlot from "@/components/AdSlot";
 import SEOHead from "@/components/SEOHead";
 import { useGPT } from "@/hooks/useGPT";
+import { logAdDensityWarning } from "@/lib/ad-density";
 
 const Home = () => {
   // Initialize Google Publisher Tag
   useGPT();
+
+  // Validate ad density on mobile (Better Ads compliance)
+  useEffect(() => {
+    // Only check on mobile
+    if (window.innerWidth < 768) {
+      // Wait for content to load
+      setTimeout(() => {
+        // Heights: top_leaderboard (100) + infeed_home_1 (250) + infeed_home_2 (250) + sticky_bottom (50)
+        const adSlotHeights = [100, 250, 250, 50];
+        logAdDensityWarning('Home', adSlotHeights);
+      }, 1000);
+    }
+  }, []);
 
   // Mock data - será substituído por dados reais
   const shorts = [

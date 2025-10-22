@@ -27,17 +27,32 @@ This guide covers the complete setup of Google Publisher Tag ads on IspiAI.
 
 ## Configuration
 
-### Step 1: Update Network Code
+### Step 1: Configure Environment Variables
 
-Edit `src/lib/gpt-config.ts` and replace `XXXXXX` with your Network Code:
+1. Copy `.env.example` to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
 
-```typescript
-const NETWORK_CODE = "12345678"; // Replace with your Network Code
-```
+2. Edit `.env` with your values:
+   ```bash
+   VITE_GPT_NETWORK_CODE=12345678              # Your Network Code
+   VITE_GPT_PUBLISHER_ID=pub-XXXXXXXXXXXXXXXX  # Your Publisher ID
+   VITE_GPT_LIMITED_ADS=true                   # Enable non-personalized ads
+   ```
+
+3. **Never commit `.env`** to version control (already in `.gitignore`)
+
+**Why use environment variables?**
+- Easy to update without editing code
+- Different values for dev/staging/production
+- Secure (not committed to Git)
 
 ### Step 2: Create Ad Units in Ad Manager
 
 Create the following ad units in Google Ad Manager:
+
+> **Note on numbered slots:** Slots like `infeed_home_1` and `infeed_home_2` share the same base configuration (`infeed_home`). The numbering is automatic in the code.
 
 | Ad Unit Name | Sizes | Placement |
 |--------------|-------|-----------|
@@ -78,6 +93,21 @@ In Ad Manager:
 
 ## Testing & Validation
 
+### 0. Automated Validation
+
+Before deploying, run the validation script:
+
+```bash
+npm run validate:ads
+```
+
+This checks:
+- ✅ Network Code is configured (not "XXXXXX")
+- ✅ All ad slots have `min-height` (CLS prevention)
+- ✅ Mobile ad density ≤30% (Better Ads compliance)
+
+**Validation runs automatically on `npm run build`**
+
 ### 1. Publisher Console (Debug Mode)
 
 Add `?google_console=1` to any URL:
@@ -91,6 +121,11 @@ This opens the GPT console where you can:
 - ✅ Check size mappings
 - ✅ See ad requests and responses
 - ✅ Debug targeting issues
+
+**Browser console will also log:**
+- GPT initialization status
+- Ad slot definitions
+- Mobile ad density warnings (if >30%)
 
 ### 2. CLS (Cumulative Layout Shift)
 
@@ -126,13 +161,26 @@ Ad Density = (Total Ad Height) / (Content Height) × 100
 Target: ≤30%
 ```
 
-**Example calculation:**
+**Automatic logging:**
+The app automatically logs ad density on mobile. Check the browser console:
+
+```
+[Better Ads] Home: Mobile ad density is 26.0% ✓
+[Better Ads] Article: Mobile ad density is 28.3% ✓
+```
+
+**Manual calculation:**
 ```typescript
 // Home page mobile
 const contentHeight = 2500; // px
 const adsHeight = 100 + 250 + 250 + 50; // top + infeed1 + infeed2 + sticky = 650px
 const density = (650 / 2500) * 100; // 26% ✓
 ```
+
+**If density is high (>30%):**
+- Reduce number of ad slots
+- Increase content length
+- Remove sticky bottom ad
 
 ---
 
@@ -255,19 +303,21 @@ googletag.pubads().addEventListener('impressionViewable', (event) => {
 ## Checklist
 
 ### Setup
-- [ ] Network Code updated in `gpt-config.ts`
+- [ ] `.env` configured with Network Code and Publisher ID
+- [ ] `ads.txt` updated and deployed to root
 - [ ] Ad units created in Ad Manager
 - [ ] Line items and orders configured
-- [ ] `ads.txt` deployed and validated
 
 ### Testing
+- [ ] `npm run validate:ads` passes without errors
 - [ ] Publisher Console shows all slots (`?google_console=1`)
 - [ ] Ads display correctly on mobile/tablet/desktop
 - [ ] CLS < 0.1 on PageSpeed Insights
 - [ ] Viewability >70% in Ad Manager reports
+- [ ] Console shows ad density logs (≤30% on mobile)
 
 ### Compliance
-- [ ] Ad density ≤30% on mobile
+- [ ] Ad density ≤30% on mobile (automatic logging)
 - [ ] All ads labeled "Publicidade"
 - [ ] No Better Ads violations
 - [ ] Privacy settings enabled (GDPR/CCPA)
@@ -276,6 +326,7 @@ googletag.pubads().addEventListener('impressionViewable', (event) => {
 - [ ] Revenue reports set up in Ad Manager
 - [ ] Viewability tracking enabled
 - [ ] Performance alerts configured
+- [ ] Console warnings monitored
 
 ---
 

@@ -38,6 +38,11 @@ const AdSlot = ({ slotId, className = "" }: AdSlotProps) => {
       return;
     }
 
+    // Validate min-height configuration (CLS safety)
+    if (!config.minHeight.desktop && !config.minHeight.tablet && !config.minHeight.mobile) {
+      console.error(`[AdSlot] ${slotId}: Missing min-height configuration (CLS risk!)`);
+    }
+
     // Set initial min-height
     setMinHeight(calculateMinHeight(config));
 
@@ -105,7 +110,7 @@ const AdSlot = ({ slotId, className = "" }: AdSlotProps) => {
         ref={adRef}
         id={divId}
         style={{ minHeight: `${minHeight}px` }}
-        aria-label="Publicidade"
+        aria-label={`Publicidade - ${slotId.replace(/_/g, ' ')}`}
         className="relative bg-muted/10 border border-dashed border-border/50 rounded-lg flex items-center justify-center overflow-hidden"
       >
         {/* Placeholder text (will be replaced by actual ad) */}
@@ -115,6 +120,15 @@ const AdSlot = ({ slotId, className = "" }: AdSlotProps) => {
       </div>
     </div>
   );
+};
+
+/**
+ * Validate if an ad slot configuration has proper min-height
+ * @param config - Ad slot configuration
+ * @returns true if valid
+ */
+export const validateAdSlotConfig = (config: AdSlotConfig): boolean => {
+  return !!(config.minHeight.desktop || config.minHeight.tablet || config.minHeight.mobile);
 };
 
 export default AdSlot;

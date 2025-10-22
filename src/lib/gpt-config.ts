@@ -17,9 +17,17 @@ export interface AdSlotConfig {
   };
 }
 
-// Replace XXXXXX with your Google Ad Manager Network Code
-// Example: /12345678/ispiai/top_leaderboard
-const NETWORK_CODE = "XXXXXX";
+// Network Code from environment variable (see .env.example)
+// Format: 8-digit number from Google Ad Manager (Admin → Global Settings)
+const NETWORK_CODE = import.meta.env.VITE_GPT_NETWORK_CODE || "XXXXXX";
+
+/**
+ * Privacy Settings (GDPR/CCPA Compliance)
+ * Set limitedAds: true to serve non-personalized ads when consent is not available
+ */
+export const PRIVACY_SETTINGS = {
+  limitedAds: import.meta.env.VITE_GPT_LIMITED_ADS === 'true' || true
+};
 
 export const AD_SLOTS: Record<string, AdSlotConfig> = {
   top_leaderboard: {
@@ -98,6 +106,9 @@ export const AD_SLOTS: Record<string, AdSlotConfig> = {
 /**
  * GPT Lazy Load Configuration
  * Optimized for news content
+ * 
+ * ❌ IMPORTANT: Do NOT use collapseEmptyDivs() - it conflicts with lazy-load
+ * and can cause layout shifts. Use min-height instead for CLS prevention.
  */
 export const LAZY_LOAD_CONFIG = {
   // Fetch ads when 25% of viewport away from being visible
@@ -106,4 +117,48 @@ export const LAZY_LOAD_CONFIG = {
   renderMarginPercent: 10,
   // No scaling on mobile
   mobileScaling: 1.0
+};
+
+/**
+ * Define a GPT slot with size mapping
+ * @param config - Ad slot configuration
+ * @returns GPT slot or null if failed
+ * 
+ * Note: Supports numbered slots (e.g., infeed_home_1, infeed_home_2)
+ * The base slot name (infeed_home) will be used for configuration lookup
+ */
+export const defineSlotWithMapping = (
+  divId: string,
+  config: AdSlotConfig
+): googletag.Slot | null => {
+  if (!window.googletag) {
+    console.error('[GPT] googletag not available');
+    return null;
+  }
+
+  let slot: googletag.Slot | null = null;
+
+  googletag.cmd.push(() => {
+    // Build size mapping if provided
+    let sizeMapping = null;
+    if (config.sizeMapping && config.sizeMapping.length > 0) {
+      const mapping = googletag.sizeMapping();
+      config.sizeMapping.forEach(({ viewport, sizes }) => {
+        mapping.addSize(viewport, sizes);
+      });
+      sizeMapping = mapping.build();
+    }
+
+    // Define slot
+    slot = googletag.defineSlot(config.adUnit, config.sizes, divId);
+    
+    if (slot) {
+      if (sizeMapping) {
+        slot.defineSizeMapping(sizeMapping);
+      }
+      slot.addService(googletag.pubads());
+    }
+  });
+
+  return slot;
 };
