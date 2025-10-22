@@ -20,38 +20,6 @@ const AdSlot = ({ slotId, className = "", useMock = false }: AdSlotProps) => {
     return AD_SLOTS[baseSlotId];
   };
 
-  // Render mock ad if useMock is true
-  if (useMock) {
-    const mockSize = slotId.includes('leaderboard') 
-      ? 'leaderboard' 
-      : slotId.includes('sticky') 
-        ? 'mobile' 
-        : 'rectangle';
-    
-    const mockVariant = slotId === 'top_leaderboard' 
-      ? 1 
-      : slotId === 'infeed_home_1' 
-        ? 2 
-        : slotId === 'infeed_home_2' 
-          ? 4 
-          : slotId === 'sidebar_mpu_1' 
-            ? 3 
-            : slotId === 'sidebar_mpu_2' 
-              ? 5 
-              : 2;
-
-    return (
-      <div className={className}>
-        <div className="text-center mb-2">
-          <span className="text-xs text-muted-foreground font-medium">
-            Publicidade
-          </span>
-        </div>
-        <MockAd size={mockSize} variant={mockVariant as any} />
-      </div>
-    );
-  }
-
   // Calculate responsive min-height
   const calculateMinHeight = (config: AdSlotConfig): number => {
     const width = window.innerWidth;
@@ -128,7 +96,39 @@ const AdSlot = ({ slotId, className = "", useMock = false }: AdSlotProps) => {
         });
       }
     };
-  }, [slotId]);
+  }, [slotId, useMock]);
+
+  // Render mock ad if useMock is true
+  if (useMock) {
+    const mockSize = slotId.includes('leaderboard') 
+      ? 'leaderboard' 
+      : slotId.includes('sticky') 
+        ? 'mobile' 
+        : 'rectangle';
+    
+    const mockVariant = slotId === 'top_leaderboard' 
+      ? 1 
+      : slotId === 'infeed_home_1' 
+        ? 2 
+        : slotId === 'infeed_home_2' 
+          ? 4 
+          : slotId === 'sidebar_mpu_1' 
+            ? 3 
+            : slotId === 'sidebar_mpu_2' 
+              ? 5 
+              : 2;
+
+    return (
+      <div className={className}>
+        <div className="text-center mb-2">
+          <span className="text-xs text-muted-foreground font-medium">
+            Publicidade
+          </span>
+        </div>
+        <MockAd size={mockSize} variant={mockVariant as any} />
+      </div>
+    );
+  }
 
   return (
     <div className={`relative ${className}`}>
