@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Shell } from '@/components/Layout/Shell';
 import SEOHead from '@/components/SEOHead';
 import Espiai30s from '@/components/Espiai30s';
@@ -8,13 +7,13 @@ import BoxTransparencia from '@/components/BoxTransparencia';
 import RelatedArticles from '@/components/RelatedArticles';
 import AdSlot from '@/components/AdSlot';
 import { useGPT } from '@/hooks/useGPT';
+import { useAdMode } from '@/hooks/useAdMode';
 import { mockArticles } from '@/lib/mock-data';
 
 const Article = () => {
   useGPT();
   const { slug } = useParams();
-  const [searchParams] = useSearchParams();
-  const [useMockAds] = useState(searchParams.get('mocks') === '1');
+  const { useMockAds } = useAdMode();
 
   const mockArticle = mockArticles[0];
 

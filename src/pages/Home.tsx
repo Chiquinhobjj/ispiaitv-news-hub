@@ -1,18 +1,16 @@
-import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { Shell } from '@/components/Layout/Shell';
 import SEOHead from '@/components/SEOHead';
 import { ShortsRail } from '@/components/Shorts/ShortsRail';
 import { FeedList } from '@/components/Feed/FeedList';
 import AdSlot from '@/components/AdSlot';
 import { useGPT } from '@/hooks/useGPT';
+import { useAdMode } from '@/hooks/useAdMode';
 import { mockShorts } from '@/lib/mock-data';
 import { usePersonalization } from '@/hooks/usePersonalization';
 
 const Home = () => {
   useGPT();
-  const [searchParams] = useSearchParams();
-  const [useMockAds] = useState(searchParams.get('mocks') === '1');
+  const { useMockAds } = useAdMode();
   const { activeFilter } = usePersonalization();
 
   return (

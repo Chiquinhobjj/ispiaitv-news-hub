@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import { Search, Moon, Sun } from "lucide-react";
+import { Search, Moon, Sun, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
+import { useAdMode } from "@/hooks/useAdMode";
 import logoPadrao from "@/assets/logo-padrao.png";
 import logoBranco from "@/assets/logo-branco.png";
 import iconOlho from "@/assets/icon-olho.png";
@@ -12,6 +13,7 @@ import iconOlho from "@/assets/icon-olho.png";
  */
 export const Header = () => {
   const [darkMode, setDarkMode] = useState(false);
+  const { useMockAds, toggleAdMode } = useAdMode();
 
   useEffect(() => {
     if (darkMode) {
@@ -62,6 +64,16 @@ export const Header = () => {
               />
             </div>
             
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleAdMode}
+              aria-label={useMockAds ? "Exibir anúncios reais" : "Exibir anúncios mock"}
+              title={useMockAds ? "Modo: Anúncios Mock" : "Modo: Anúncios Reais"}
+            >
+              {useMockAds ? <Eye className="h-5 w-5" /> : <EyeOff className="h-5 w-5" />}
+            </Button>
+
             <Button
               variant="ghost"
               size="icon"
