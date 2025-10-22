@@ -1,0 +1,12 @@
+# IspiAI - Programmatic Transparency File (ads.txt)
+# Updated: 2025-10-22
+# More info: https://iabtechlab.com/ads-txt/
+
+# Google Ad Manager / AdSense
+# Replace pub-XXXXXXXXXXXXXXXX with your actual Publisher ID
+# Example: google.com, pub-1234567890123456, DIRECT, f08c47fec0942fa0
+google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+
+# Add other SSPs/exchanges below as needed
+# Format: domain, publisher_id, relationship (DIRECT/RESELLER), certification_authority_id
+# Example: appnexus.com, 12345, RESELLER, f5ab79cb980f11d1

@@ -3,8 +3,12 @@ import ShortPlayer from "@/components/ShortPlayer";
 import ArticleCard from "@/components/ArticleCard";
 import AdSlot from "@/components/AdSlot";
 import SEOHead from "@/components/SEOHead";
+import { useGPT } from "@/hooks/useGPT";
 
 const Home = () => {
+  // Initialize Google Publisher Tag
+  useGPT();
+
   // Mock data - será substituído por dados reais
   const shorts = [
     { id: 1, videoUrl: "", title: "IA revoluciona setor de saúde", captions: "Novo modelo prevê doenças com 95% de precisão" },
@@ -60,8 +64,8 @@ const Home = () => {
         <Header />
         
         <main className="container mx-auto px-4 py-8">
-          {/* Top Leaderboard Ad */}
-          <AdSlot slotId="top_leaderboard" minHeight="90px" className="mb-8 max-w-[970px] mx-auto" />
+          {/* Top Leaderboard Ad - Above the fold */}
+          <AdSlot slotId="top_leaderboard" className="mb-8 max-w-[970px] mx-auto" />
 
           {/* Hero Section - Shorts */}
           <section className="mb-12">
@@ -71,23 +75,14 @@ const Home = () => {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {shorts.map((short, idx) => (
-                <div key={short.id}>
-                  <ShortPlayer {...short} />
-                  {idx === 1 && (
-                    <AdSlot 
-                      slotId={`infeed_home_${idx}`} 
-                      minHeight="250px" 
-                      className="mt-6 md:hidden"
-                    />
-                  )}
-                </div>
+              {shorts.map((short) => (
+                <ShortPlayer key={short.id} {...short} />
               ))}
             </div>
           </section>
 
-          {/* Infeed Ad - Mobile only */}
-          <AdSlot slotId="infeed_home_1" minHeight="250px" className="mb-8 md:hidden" />
+          {/* Infeed Ad 1 - Between shorts and featured */}
+          <AdSlot slotId="infeed_home_1" className="mb-8" />
 
           {/* Featured Article */}
           <section className="mb-12">
@@ -104,12 +99,9 @@ const Home = () => {
                 {articles.map((article, idx) => (
                   <div key={article.slug}>
                     <ArticleCard {...article} />
+                    {/* Infeed Ad 2 - After second article */}
                     {idx === 1 && (
-                      <AdSlot 
-                        slotId={`infeed_home_${idx + 2}`} 
-                        minHeight="250px" 
-                        className="mt-6"
-                      />
+                      <AdSlot slotId="infeed_home_2" className="mt-6" />
                     )}
                   </div>
                 ))}
@@ -118,14 +110,14 @@ const Home = () => {
 
             {/* Sidebar - Desktop only */}
             <aside className="hidden md:block space-y-6">
-              <AdSlot slotId="sidebar_mpu_1" minHeight="250px" />
-              <AdSlot slotId="sidebar_mpu_2" minHeight="250px" />
+              <AdSlot slotId="sidebar_mpu_1" />
+              <AdSlot slotId="sidebar_mpu_2" />
             </aside>
           </section>
 
           {/* Sticky Bottom Ad - Mobile only */}
-          <div className="md:hidden fixed bottom-0 left-0 right-0 z-40">
-            <AdSlot slotId="sticky_bottom_mobile" minHeight="50px" />
+          <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+            <AdSlot slotId="sticky_bottom_mobile" />
           </div>
         </main>
       </div>

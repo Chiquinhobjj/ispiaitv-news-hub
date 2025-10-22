@@ -8,9 +8,13 @@ import RelatedArticles from "@/components/RelatedArticles";
 import AdSlot from "@/components/AdSlot";
 import { ArrowLeft, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useGPT } from "@/hooks/useGPT";
 
 const Article = () => {
   const { slug } = useParams();
+
+  // Initialize Google Publisher Tag
+  useGPT();
 
   // Mock data - será substituído por dados reais
   const article = {
@@ -193,8 +197,8 @@ const Article = () => {
             ]}
           />
 
-          {/* Mid-article Ad */}
-          <AdSlot slotId="article_mid" minHeight="250px" className="my-8" />
+          {/* Mid-article Ad - After Espiai30s */}
+          <AdSlot slotId="article_mid" className="my-8" />
 
           {/* Article Content */}
           <div 
@@ -202,8 +206,8 @@ const Article = () => {
             dangerouslySetInnerHTML={{ __html: article.content }}
           />
 
-          {/* In-article Ad */}
-          <AdSlot slotId="inarticle_1" minHeight="250px" className="my-8" />
+          {/* In-article Ad - Mid content */}
+          <AdSlot slotId="inarticle_1" className="my-8" />
 
           {/* Timeline */}
           <div className="my-12">
@@ -230,8 +234,8 @@ const Article = () => {
         </article>
 
         {/* Sticky Bottom Ad - Mobile */}
-        <div className="md:hidden fixed bottom-0 left-0 right-0 z-40">
-          <AdSlot slotId="sticky_bottom_mobile" minHeight="50px" />
+        <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+          <AdSlot slotId="sticky_bottom_mobile" />
         </div>
       </div>
     </>
