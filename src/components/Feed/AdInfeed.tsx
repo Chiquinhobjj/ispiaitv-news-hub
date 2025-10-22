@@ -1,4 +1,4 @@
-import { AdSlot } from '@/components/AdSlot';
+import AdSlot from '@/components/AdSlot';
 
 interface AdInfeedProps {
   position: number;
