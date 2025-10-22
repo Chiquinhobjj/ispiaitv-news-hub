@@ -60,6 +60,32 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Configuration Required Before Deploy
+
+**CRITICAL**: Before deploying to production, you MUST configure the ad system:
+
+### 1. Environment Variables
+```sh
+# Copy the template
+cp .env.example .env
+
+# Edit .env and fill in your values:
+# - VITE_GPT_NETWORK_CODE: Your Google Ad Manager network code (8 digits)
+# - VITE_GPT_PUBLISHER_ID: Your AdSense publisher ID (pub-XXXXXXXXXXXXXXXX)
+# - VITE_GPT_LIMITED_ADS: Set to 'true' for GDPR/CCPA compliance
+```
+
+### 2. Update ads.txt
+Edit `public/ads.txt` and replace `pub-XXXXXXXXXXXXXXXX` with your actual Publisher ID from Google Ad Manager.
+
+### 3. Validate Configuration
+```sh
+# Run validation to ensure ads are properly configured
+npm run validate:ads
+```
+
+**NOTE**: The build will automatically run validation. If validation fails, the build will abort to prevent deploying a broken ad configuration.
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/d74d3e41-0eb1-4a47-aa32-ffbafb273bd0) and click on Share -> Publish.
