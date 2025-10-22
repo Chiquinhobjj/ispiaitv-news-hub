@@ -22,8 +22,8 @@ serve(async (req) => {
   }
 
   const { context = [], tools = [], metadata = {} } = await req.json();
-  const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
-  const OPENAI_MODEL = Deno.env.get('OPENAI_MODEL') || 'gpt-4o-mini';
+  const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+  const AI_MODEL = 'google/gemini-2.5-flash'; // Lovable AI default model
 
   // Extract metadata from context if present
   let approvedSteps: string[] | null = null;
@@ -40,9 +40,9 @@ serve(async (req) => {
     return true;
   });
 
-  if (!OPENAI_API_KEY) {
+  if (!LOVABLE_API_KEY) {
     return new Response(
-      JSON.stringify({ error: 'OPENAI_API_KEY not configured' }),
+      JSON.stringify({ error: 'LOVABLE_API_KEY not configured' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
@@ -66,19 +66,18 @@ serve(async (req) => {
           const userPrompt = cleanContext[cleanContext.length - 1]?.value || 'Sem contexto';
           const planningPrompt = `Generate 5-10 actionable steps for: "${userPrompt}". Return ONLY a JSON array with format: [{"id":"step_1","description":"...","checked":true,"status":"pending"}]. No markdown, no explanations, just the JSON array.`;
           
-          const planningResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+          const planningResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
             method: 'POST',
             headers: {
-              'Authorization': `Bearer ${OPENAI_API_KEY}`,
+              'Authorization': `Bearer ${LOVABLE_API_KEY}`,
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              model: OPENAI_MODEL,
+              model: AI_MODEL,
               messages: [
                 { role: 'system', content: 'You are a planning assistant. Generate concise, actionable steps in JSON format.' },
                 { role: 'user', content: planningPrompt }
               ],
-              temperature: 0.7,
             }),
           });
 
@@ -115,14 +114,14 @@ serve(async (req) => {
 
         const executionPrompt = `Execute the following approved steps: ${approvedSteps.join(', ')}. Context: ${JSON.stringify(cleanContext)}`;
 
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${OPENAI_API_KEY}`,
+            'Authorization': `Bearer ${LOVABLE_API_KEY}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            model: OPENAI_MODEL,
+            model: AI_MODEL,
             messages: [
               { role: 'system', content: 'You are XomanoAI, a helpful assistant for IspiAI journalism platform.' },
               ...cleanContext.map((item: any) => ({ role: item.description, content: item.value })),

@@ -1,1 +1,7 @@
 project_id = "rwrelvtigiyxrkueohkq"
+
+[functions.xomano-ai]
+verify_jwt = false
+
+[functions.generate-sitemaps]
+verify_jwt = false

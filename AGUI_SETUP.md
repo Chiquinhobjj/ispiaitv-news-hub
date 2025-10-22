@@ -10,9 +10,9 @@ XomanoAI é o agente conversacional do IspiAI, implementado usando o protocolo A
 - **Hook React**: `src/hooks/useXomanoAgent.ts`
 - **UI Components**: `src/components/AgentSidebar.tsx`, `src/components/AgentStepChecklist.tsx`
 
-### Backend (Supabase Edge Function)
+### Backend (Edge Function)
 - **Endpoint SSE**: `supabase/functions/xomano-ai/index.ts`
-- **Provider**: OpenAI GPT-4o-mini (streaming)
+- **Provider**: Lovable AI (Google Gemini 2.5 Flash streaming)
 
 ## Eventos Suportados (AG-UI)
 
@@ -54,10 +54,11 @@ XomanoAI é o agente conversacional do IspiAI, implementado usando o protocolo A
 # Frontend (.env)
 VITE_AGENT_URL=/api/agent/xomano_ai
 
-# Backend (Supabase Secrets)
-OPENAI_API_KEY=sk-...
-OPENAI_MODEL=gpt-4o-mini
+# Backend (Lovable Cloud)
+LOVABLE_API_KEY=<auto-provisionado>
 ```
+
+**Nota:** O `LOVABLE_API_KEY` é automaticamente provisionado pelo Lovable Cloud. Não é necessário configurá-lo manualmente.
 
 ### Uso Básico
 ```typescript
@@ -141,16 +142,11 @@ function App() {
 
 ### 1. Habilitar Lovable Cloud
 
-Antes de usar o XomanoAI, você precisa habilitar o Lovable Cloud para ter acesso às Edge Functions.
+✅ Lovable Cloud já está habilitado! Ele fornece acesso às Edge Functions e ao Lovable AI Gateway.
 
-### 2. Adicionar Secrets
+### 2. Habilitar Lovable AI
 
-Adicione as seguintes secrets no Lovable Cloud:
-
-```bash
-OPENAI_API_KEY=sk-... # Sua chave da OpenAI
-OPENAI_MODEL=gpt-4o-mini # Modelo a ser usado (opcional)
-```
+✅ Lovable AI já está habilitado! O `LOVABLE_API_KEY` é automaticamente provisionado - sem necessidade de configuração manual.
 
 ### 3. Deploy da Edge Function
 
@@ -160,8 +156,8 @@ A edge function `xomano-ai` será automaticamente deployada após suas alteraç�
 
 ### Erro: "Cannot connect to agent"
 - Verifique se a Edge Function está deployada
-- Confirme `OPENAI_API_KEY` nas Supabase Secrets
-- Verifique se o Lovable Cloud está habilitado
+- Confirme que Lovable Cloud e Lovable AI estão habilitados
+- Verifique logs da Edge Function
 
 ### Checklist não aparece
 - Verifique se `state.requiresApproval === true`
