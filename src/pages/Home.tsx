@@ -1,17 +1,20 @@
 import { Shell } from '@/components/Layout/Shell';
 import SEOHead from '@/components/SEOHead';
-import { ShortsRail } from '@/components/Shorts/ShortsRail';
-import { FeedList } from '@/components/Feed/FeedList';
+import { HeroArticle } from '@/components/Discover/HeroArticle';
+import { DiscoverGrid } from '@/components/Discover/DiscoverGrid';
+import { ShortsToggle } from '@/components/Discover/ShortsToggle';
+import { WidgetSidebar } from '@/components/Discover/WidgetSidebar';
 import AdSlot from '@/components/AdSlot';
 import { useGPT } from '@/hooks/useGPT';
 import { useAdMode } from '@/hooks/useAdMode';
-import { mockShorts } from '@/lib/mock-data';
-import { usePersonalization } from '@/hooks/usePersonalization';
+import { mockShorts, mockArticles } from '@/lib/mock-data';
 
 const Home = () => {
   useGPT();
   const { useMockAds } = useAdMode();
-  const { activeFilter } = usePersonalization();
+
+  const heroArticle = mockArticles[0];
+  const gridArticles = mockArticles.slice(1);
 
   return (
     <Shell showPersonalization>
@@ -20,22 +23,34 @@ const Home = () => {
         description="Notícias, análises e shorts sobre IA. Jornalismo investigativo moderno."
       />
 
-      {/* Shorts Hero Section */}
-      <section className="container py-8">
-        <h2 className="heading-lg mb-6">Últimas em 30s</h2>
-        <ShortsRail shorts={mockShorts} />
-      </section>
+      <div className="flex gap-8">
+        {/* Main Content */}
+        <div className="flex-1 min-w-0">
+          {/* Hero Article */}
+          <section className="container py-8">
+            <HeroArticle article={heroArticle} />
+          </section>
 
-      {/* Top Leaderboard Ad */}
-      <div className="container">
-        <AdSlot slotId="top_leaderboard" useMock={useMockAds} />
+          {/* Billboard Ad */}
+          <div className="container mb-8">
+            <AdSlot slotId="billboard_hero" useMock={useMockAds} />
+          </div>
+
+          {/* Shorts Toggle */}
+          <ShortsToggle shorts={mockShorts} />
+
+          {/* Discover Grid */}
+          <DiscoverGrid articles={gridArticles} useMockAds={useMockAds} />
+
+          {/* Sticky Bottom Mobile Ad */}
+          <AdSlot slotId="sticky_bottom_mobile" className="md:hidden" useMock={useMockAds} />
+        </div>
+
+        {/* Sidebar Widgets */}
+        <div className="w-80 flex-shrink-0">
+          <WidgetSidebar />
+        </div>
       </div>
-
-      {/* Infinite Feed with Ads */}
-      <FeedList filter={activeFilter} useMockAds={useMockAds} />
-
-      {/* Sticky Bottom Mobile Ad */}
-      <AdSlot slotId="sticky_bottom_mobile" className="md:hidden" useMock={useMockAds} />
     </Shell>
   );
 };

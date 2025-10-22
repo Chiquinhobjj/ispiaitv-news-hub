@@ -27,6 +27,8 @@ export interface ArticleData {
   publishedAt: string;
   readTime: number; // minutes
   thumbnail: string;
+  imageUrl: string; // Alias for thumbnail
+  sources: number; // Number of sources cited
   featured?: boolean;
 }
 
@@ -166,7 +168,7 @@ export const mockArticles: ArticleData[] = [
     slug: 'ia-revoluciona-diagnostico-medico',
     title: 'IA revoluciona diagnóstico médico com 95% de precisão',
     excerpt: 'Novo sistema de inteligência artificial supera médicos humanos na detecção precoce de doenças raras.',
-    category: 'Saúde',
+    category: 'saude',
     author: {
       name: 'Dra. Ana Silva',
       avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop',
@@ -174,6 +176,8 @@ export const mockArticles: ArticleData[] = [
     publishedAt: '2025-01-15T10:00:00Z',
     readTime: 5,
     thumbnail: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=600&fit=crop',
+    sources: 8,
     featured: true,
   },
   {
@@ -181,7 +185,7 @@ export const mockArticles: ArticleData[] = [
     slug: 'openai-anuncia-gpt-5',
     title: 'OpenAI anuncia GPT-5 com capacidades surpreendentes',
     excerpt: 'Novo modelo de linguagem promete revolucionar a forma como interagimos com IA.',
-    category: 'Tecnologia',
+    category: 'tecnologia',
     author: {
       name: 'Carlos Mendes',
       avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop',
@@ -189,13 +193,15 @@ export const mockArticles: ArticleData[] = [
     publishedAt: '2025-01-14T15:30:00Z',
     readTime: 7,
     thumbnail: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop',
+    sources: 12,
   },
   {
     id: '3',
     slug: 'ia-educacao-personalizada',
     title: 'IA transforma educação com ensino personalizado',
     excerpt: 'Plataformas educacionais usam IA para adaptar conteúdo ao ritmo de cada estudante.',
-    category: 'Educação',
+    category: 'educacao',
     author: {
       name: 'Prof. João Santos',
       avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop',
@@ -203,13 +209,15 @@ export const mockArticles: ArticleData[] = [
     publishedAt: '2025-01-14T09:00:00Z',
     readTime: 6,
     thumbnail: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop',
+    sources: 5,
   },
   {
     id: '4',
     slug: 'ia-previsoes-climaticas',
     title: 'IA melhora previsões climáticas em 40%',
     excerpt: 'Modelos avançados de machine learning revolucionam meteorologia.',
-    category: 'Meio Ambiente',
+    category: 'meio-ambiente',
     author: {
       name: 'Marina Costa',
       avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop',
@@ -217,13 +225,15 @@ export const mockArticles: ArticleData[] = [
     publishedAt: '2025-01-13T11:20:00Z',
     readTime: 4,
     thumbnail: 'https://images.unsplash.com/photo-1592210454359-9043f067919b?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1592210454359-9043f067919b?w=800&h=600&fit=crop',
+    sources: 9,
   },
   {
     id: '5',
     slug: 'ia-detecta-fraudes',
     title: 'Bancos usam IA para detectar fraudes em tempo real',
     excerpt: 'Sistema identifica transações suspeitas com 99.5% de precisão.',
-    category: 'Segurança',
+    category: 'negocios',
     author: {
       name: 'Ricardo Almeida',
       avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop',
@@ -231,13 +241,15 @@ export const mockArticles: ArticleData[] = [
     publishedAt: '2025-01-13T14:45:00Z',
     readTime: 5,
     thumbnail: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=600&fit=crop',
+    sources: 7,
   },
   {
     id: '6',
     slug: 'ia-agricultura-sustentavel',
     title: 'Agricultura 4.0: IA otimiza produção e reduz desperdício',
     excerpt: 'Fazendas inteligentes aumentam produtividade em 30% com uso de IA.',
-    category: 'Agronegócio',
+    category: 'meio-ambiente',
     author: {
       name: 'Pedro Oliveira',
       avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop',
@@ -245,13 +257,15 @@ export const mockArticles: ArticleData[] = [
     publishedAt: '2025-01-12T08:00:00Z',
     readTime: 6,
     thumbnail: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&h=600&fit=crop',
+    sources: 6,
   },
   {
     id: '7',
     slug: 'ia-arte-gerativa',
     title: 'Artistas usam IA para criar obras únicas',
     excerpt: 'Nova geração de artistas combina criatividade humana com IA generativa.',
-    category: 'Arte',
+    category: 'tecnologia',
     author: {
       name: 'Beatriz Lima',
       avatar: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=100&h=100&fit=crop',
@@ -259,13 +273,15 @@ export const mockArticles: ArticleData[] = [
     publishedAt: '2025-01-11T16:30:00Z',
     readTime: 5,
     thumbnail: 'https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=800&h=600&fit=crop',
+    sources: 4,
   },
   {
     id: '8',
     slug: 'veiculos-autonomos-sp',
     title: 'São Paulo recebe primeiros veículos autônomos',
     excerpt: 'Frota de táxis autônomos começa operação em fase de testes na capital.',
-    category: 'Mobilidade',
+    category: 'local',
     author: {
       name: 'Fernando Rocha',
       avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&h=100&fit=crop',
@@ -273,6 +289,8 @@ export const mockArticles: ArticleData[] = [
     publishedAt: '2025-01-11T10:15:00Z',
     readTime: 7,
     thumbnail: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop',
+    sources: 10,
   },
 ];
 
