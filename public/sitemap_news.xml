@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+  <url>
+    <loc>https://ispiai.com/noticias/ia-revoluciona-diagnostico-medico</loc>
+    <news:news>
+      <news:publication>
+        <news:name>IspiAI</news:name>
+        <news:language>pt</news:language>
+      </news:publication>
+      <news:publication_date>2025-10-21T17:00:00.000Z</news:publication_date>
+      <news:title>Inteligência Artificial revoluciona diagnóstico médico no Brasil</news:title>
+      <news:keywords>inteligência artificial, saúde, startups, brasil</news:keywords>
+    </news:news>
+  </url>
+</urlset>

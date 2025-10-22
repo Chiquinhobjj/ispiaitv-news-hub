@@ -1,20 +1,11 @@
 import { useEffect } from "react";
-
-interface ArticleSchema {
-  headline: string;
-  description: string;
-  image?: string;
-  datePublished: string;
-  dateModified: string;
-  author: string;
-  publisher: string;
-}
+import { generateNewsArticleJsonLd, type NewsArticleData } from "@/lib/structured-data";
 
 interface SEOHeadProps {
   title: string;
   description: string;
   image?: string;
-  article?: ArticleSchema;
+  article?: NewsArticleData;
   canonical?: string;
 }
 
@@ -26,6 +17,7 @@ const SEOHead = ({ title, description, image, article, canonical }: SEOHeadProps
     // Update meta tags
     const metaTags = [
       { name: "description", content: description },
+      { name: "robots", content: "max-image-preview:large" },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
       { property: "og:type", content: article ? "article" : "website" },
@@ -37,6 +29,8 @@ const SEOHead = ({ title, description, image, article, canonical }: SEOHeadProps
     if (image) {
       metaTags.push(
         { property: "og:image", content: image },
+        { property: "og:image:width", content: "1200" },
+        { property: "og:image:height", content: "630" },
         { name: "twitter:image", content: image }
       );
     }
@@ -67,36 +61,24 @@ const SEOHead = ({ title, description, image, article, canonical }: SEOHeadProps
     }
 
     // JSON-LD for NewsArticle
+    let jsonLdScript: HTMLScriptElement | null = null;
+    
     if (article) {
-      const script = document.createElement("script");
-      script.type = "application/ld+json";
-      script.text = JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "NewsArticle",
-        "headline": article.headline,
-        "description": article.description,
-        "image": article.image,
-        "datePublished": article.datePublished,
-        "dateModified": article.dateModified,
-        "author": {
-          "@type": "Person",
-          "name": article.author
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": article.publisher,
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://ispiai.com/logo.png"
-          }
-        }
-      });
-      document.head.appendChild(script);
-
-      return () => {
-        document.head.removeChild(script);
-      };
+      const jsonLd = generateNewsArticleJsonLd(article);
+      
+      jsonLdScript = document.createElement("script");
+      jsonLdScript.type = "application/ld+json";
+      jsonLdScript.id = "newsarticle-jsonld";
+      jsonLdScript.text = JSON.stringify(jsonLd, null, 2);
+      document.head.appendChild(jsonLdScript);
     }
+
+    // Cleanup
+    return () => {
+      if (jsonLdScript && document.head.contains(jsonLdScript)) {
+        document.head.removeChild(jsonLdScript);
+      }
+    };
   }, [title, description, image, article, canonical]);
 
   return null;

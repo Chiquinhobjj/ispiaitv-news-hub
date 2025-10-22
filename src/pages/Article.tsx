@@ -33,12 +33,35 @@ const Article = () => {
 
       <p>A startup planeja expandir o sistema para outros tipos de diagnósticos médicos nos próximos meses, incluindo doenças cardíacas e neurológicas.</p>
     `,
-    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200",
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&h=675",
+        width: 1200,
+        height: 675
+      },
+      {
+        url: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&h=1200",
+        width: 1200,
+        height: 1200
+      }
+    ],
     category: "Tecnologia",
-    publishDate: "2025-10-22T10:00:00Z",
-    updateDate: "2025-10-22T14:30:00Z",
-    author: "João Santos",
+    tags: ["inteligência artificial", "saúde", "startups", "brasil", "diagnóstico médico"],
+    publishDate: "2025-10-22T10:00:00-03:00",
+    updateDate: "2025-10-22T14:30:00-03:00",
+    author: {
+      name: "João Santos",
+      url: "https://ispiai.com/autores/joao-santos"
+    },
   };
+
+  // Calcular wordCount do conteúdo HTML
+  const calculateWordCount = (html: string): number => {
+    const text = html.replace(/<[^>]*>/g, '');
+    return text.trim().split(/\s+/).length;
+  };
+
+  const wordCount = calculateWordCount(article.content);
 
   const timelineEvents = [
     {
@@ -81,16 +104,37 @@ const Article = () => {
       <SEOHead 
         title={article.title}
         description={article.excerpt}
-        image={article.image}
+        image={article.images[0].url}
         canonical={`https://ispiai.com/noticias/${slug}`}
         article={{
           headline: article.title,
           description: article.excerpt,
-          image: article.image,
+          images: article.images.map(img => ({
+            "@type": "ImageObject",
+            url: img.url,
+            width: img.width,
+            height: img.height
+          })),
           datePublished: article.publishDate,
           dateModified: article.updateDate,
-          author: article.author,
-          publisher: "IspiAI",
+          author: {
+            "@type": "Person",
+            name: article.author.name,
+            url: article.author.url
+          },
+          publisher: {
+            name: "IspiAI",
+            logo: {
+              "@type": "ImageObject",
+              url: "https://ispiai.com/logo.png",
+              width: 200,
+              height: 60
+            }
+          },
+          articleSection: article.category,
+          url: `https://ispiai.com/noticias/${slug}`,
+          keywords: article.tags,
+          wordCount: wordCount
         }}
       />
       
@@ -119,7 +163,7 @@ const Article = () => {
           {/* Meta */}
           <div className="flex items-center justify-between mb-8 pb-6 border-b">
             <div className="text-sm text-muted-foreground">
-              Por <span className="font-medium text-foreground">{article.author}</span>
+              Por <span className="font-medium text-foreground">{article.author.name}</span>
               {" • "}
               <time dateTime={article.publishDate}>22 de outubro de 2025</time>
             </div>
@@ -133,7 +177,7 @@ const Article = () => {
           {/* Featured Image */}
           <div className="aspect-video mb-8 rounded-xl overflow-hidden">
             <img 
-              src={article.image} 
+              src={article.images[0].url} 
               alt={article.title}
               className="w-full h-full object-cover"
             />
@@ -168,7 +212,7 @@ const Article = () => {
 
           {/* Transparency Box */}
           <BoxTransparencia 
-            author={article.author}
+            author={article.author.name}
             publishDate="22 de outubro de 2025"
             updateDate="22 de outubro de 2025, 14:30"
             sources={[

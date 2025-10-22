@@ -1,0 +1,4 @@
+# Supabase Edge Functions Configuration
+
+[functions.generate-sitemaps]
+verify_jwt = false
